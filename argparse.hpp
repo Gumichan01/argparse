@@ -21,6 +21,7 @@ namespace argparse {
     // Modified from https://github.com/davisking/dlib/blob/master/dlib/algs.h
     template <typename T> struct is_standard_type        { const static bool value = false; };
 
+    template <> struct is_standard_type<bool>             { const static bool value = true; };
     template <> struct is_standard_type<float>           { const static bool value = true; };
     template <> struct is_standard_type<double>          { const static bool value = true; };
     template <> struct is_standard_type<long double>     { const static bool value = true; };
@@ -197,7 +198,11 @@ namespace argparse {
             size_t N = arguments_.size();
             arguments_.push_back(arg);
             if (arg.fixed && arg.fixed_nargs <= 1) {
-                variables_.push_back(String());
+                if (arg.fixed_nargs == 1) {
+                    variables_.push_back(String());
+                } else { // arg.fixed_nargs == 0 because arg.fixed_nargs <= 1 and is type is unsigned
+                    variables_.push_back(String("0"));
+                }
             } else {
                 variables_.push_back(String());
             }
@@ -330,6 +335,9 @@ namespace argparse {
                          !(argv.end() - in - nfinal - 1)))
                         argumentError(String("too few inputs passed to argument ").append(el), true);
                     if (!active.optional) nrequired--;
+                    if (active.fixed && active.fixed_nargs == 0) {
+                        variables_[index_[active.canonicalName()]] = String("1");
+                    }
                     consumed = 0;
                 }
             }
