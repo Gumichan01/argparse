@@ -97,17 +97,18 @@ Arguments that are treated as flags can be retrieved as boolean:
 Method Summary
 --------------
 
-    ArgumentParser()       default constructor
-    useExceptions()        if true, parsing errors throw exceptions rather than printing to stderr and exiting
-    appName()              set the name of the application
-    addArgument()          specify an argument to search for
-    addFinalArgument()     specify a final un-named argument
-    ignoreFirstArgument()  don't parse the first argument (usually the caller name on UNIX)
-    parse()                invoke the parser on a `char**` array
-    retrieve()             retrieve a set of inputs for an argument
-    usage()                return a formatted usage string
-    empty()                check if the set of specified arguments is empty
-    clear()                clear all specified arguments
-    isRegisteredArgument() check if an argument has been registered
-    isParsedArgument()     check if the following argument has been found
+    ArgumentParser()          default constructor
+    useExceptions()           if true, parsing errors throw exceptions rather than printing to stderr and exiting
+    appName()                 set the name of the application
+    addArgument()             specify an argument to search for
+    addFinalArgument()        specify a final un-named argument
+    ignoreFirstArgument()     don't parse the first argument (usually the caller name on UNIX)
+    parse()                   invoke the parser on a `char**` array
+    retrieve()                retrieve a set of inputs for an argument
+    retrieveParsedArguments() retrieve every parsed arguments (positional argument provided by the user to the app)
+    usage()                   return a formatted usage string
+    empty()                   check if the set of specified arguments is empty
+    clear()                   clear all specified arguments
+    isRegisteredArgument()    check if an argument has been registered
+    isParsedArgument()        check if the following argument has been found
 
