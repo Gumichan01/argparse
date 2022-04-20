@@ -5,7 +5,7 @@ A slimline C++ class for parsing command-line arguments, with an interface simil
 Usage
 -----
 An example says it best:
-  
+
     int main(int argc, const char** argv) {
 
       // make a new ArgumentParser
@@ -26,13 +26,14 @@ An example says it best:
       parser.parse(argc, argv);
 
       // if we get here, the configuration is valid
+      bool optional = parser.retrieve<bool>("optional");
       int cactus = parser.retrieve<int>("cactus");
       return cactus;
     }
 
 If the supplied format is incorrect or we explicitly call `parser.usage()`, a usage string is printed to the terminal:
 
-    Usage: app_name --required REQUIRED [-a] [-b] [--optional] [--cactus CACTUS] 
+    Usage: app_name --required REQUIRED [-a] [-b] [--optional] [--cactus CACTUS]
                     [--five FIVE FIVE FIVE ...] [--atleast ATLEAST [ATLEAST ...]]
                     [--any [ANY ...]] output
 
@@ -42,7 +43,7 @@ Just grab the `argparse.hpp` header and go! The `ArgumentParser` is the only def
 
 Format
 ------
-**specifier**  
+**specifier**
 Arguments can be specified in a number of formats. They can have single character short names prefixed with a single '-':
 
     -b
@@ -51,7 +52,7 @@ or long name prefixed with '--':
 
     --banana
 
-**number**  
+**number**
 The number of expected inputs trailing an argument can also be specified. This comes in two flavours:
 
 
@@ -68,10 +69,10 @@ Variable number arguments allow for an undetermined number of inputs trailing an
 
 In both cases, the output is stored as a vector of strings. If the number of inputs is not specified, it defaults to `0`.
 
-**required/optional**  
+**required/optional**
 Arguments can be marked as either required or optional. All required arguments must appear before any optional arguments in the command-line input.
 
-**final**  
+**final**
 Often UNIX command-line tools have an un-named final argument that collects all remaining inputs. The name that these inputs map to internally can be specified using the `addFinalArgument()` method of `ArgumentParser`. Along with its name, you can also specify the number of inputs to parse. Since it is un-named however, there are a number of restrictions:
 
 1. The final argument can always require a fixed number of inputs
@@ -80,7 +81,7 @@ Often UNIX command-line tools have an un-named final argument that collects all 
 
 Retrieving
 ----------
-Inputs to an argument can be retrieved with the `retrieve()` method of `ArgumentParser`. Importantly, if the inputs are parsed as an array, they must be retrieved as an array. Failure to do so will result in a `std::bad_cast` exception. 
+Inputs to an argument can be retrieved with the `retrieve()` method of `ArgumentParser`. Importantly, if the inputs are parsed as an array, they must be retrieved as an array. Failure to do so will result in a `std::bad_cast` exception.
 
 Arguments can also be cast to other types as long as the cast is trivial. For instance, we could retrieve the array of strings from the '--five' argument as an array of ints:
 
@@ -93,17 +94,17 @@ or convert the required argument to a float:
 Method Summary
 --------------
 
-    ArgumentParser()      default constructor
-    useExceptions()       if true, parsing errors throw exceptions rather than printing to stderr and exiting
-    appName()             set the name of the application
-    addArgument()         specify an argument to search for
-    addFinalArgument()    specify a final un-named argument
-    ignoreFirstArgument() don't parse the first argument (usually the caller name on UNIX)
-    parse()               invoke the parser on a `char**` array
-    retrieve()            retrieve a set of inputs for an argument
-    usage()               return a formatted usage string
-    empty()               check if the set of specified arguments is empty
-    clear()               clear all specified arguments
-    exists()              check if an argument has been found
-    gotArguemnt()         check if an argument is provided by the user
+    ArgumentParser()       default constructor
+    useExceptions()        if true, parsing errors throw exceptions rather than printing to stderr and exiting
+    appName()              set the name of the application
+    addArgument()          specify an argument to search for
+    addFinalArgument()     specify a final un-named argument
+    ignoreFirstArgument()  don't parse the first argument (usually the caller name on UNIX)
+    parse()                invoke the parser on a `char**` array
+    retrieve()             retrieve a set of inputs for an argument
+    usage()                return a formatted usage string
+    empty()                check if the set of specified arguments is empty
+    clear()                clear all specified arguments
+    isRegisteredArgument() check if an argument has been registered
+    isParsedArgument()     check if the following argument has been found
 
