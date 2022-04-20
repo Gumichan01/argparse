@@ -12,18 +12,16 @@ An example says it best:
       ArgumentParser parser;
 
       // add some arguments to search for
-      parser.addArgument("-a");
-      parser.addArgument("-b");
-      parser.addArgument("-c", "--cactus", 1);
-      parser.addArgument("-o", "--optional");
-      parser.addArgument("-r", "--required", 1, true);
-      parser.addArgument("--five", 5);
-      parser.addArgument("--atleast", '+');
-      parser.addArgument("--any", '*');
-      parser.addFinalArgument("output");
-
-      // parse the command-line arguments - throws if invalid format
-      parser.parse(argc, argv);
+      parser.addArgument("-a")
+      .addArgument("-b")
+      .addArgument("-c", "--cactus", 1)
+      .addArgument("-o", "--optional")
+      .addArgument("-r", "--required", 1, true)
+      .addArgument("--five", 5)
+      .addArgument("--atleast", '+')
+      .addArgument("--any", '*')
+      .addFinalArgument("output")
+      .parse(argc, argv); // parse the command-line arguments - throws if invalid format
 
       // if we get here, the configuration is valid
       bool optional = parser.retrieve<bool>("optional");
@@ -59,7 +57,8 @@ The number of expected inputs trailing an argument can also be specified. This c
 1. fixed number arguments
 2. variable number arguments
 
-Fixed number arguments are simply specified with an integer which is `0` or greater. If that exact number of inputs trailing the argument is not found, the parser will fail with a `std::invalid_argument` exception. If the number is `1`, the input is stored as a string. If the number is greater than `1`, the input is stored as a vector of strings.
+Fixed number arguments are simply specified with an integer which is `0` or greater. If that exact number of inputs trailing the argument is not found, the parser will fail with a `std::invalid_argument` exception.
+If the number is `0`, the argument is treated as a flag, and the input is stored as a boolean. If the number is `1`, the input is stored as a string. If the number is greater than `1`, the input is stored as a vector of strings.
 
 
 Variable number arguments allow for an undetermined number of inputs trailing an argument. The parser will attempt to consume as many arguments as possible until the next valid argument is encountered. There are two types of variable argument specifiers, and they use the same syntax as regular expressions:
@@ -89,7 +88,11 @@ Arguments can also be cast to other types as long as the cast is trivial. For in
 
 or convert the required argument to a float:
 
-    float  req = parser.retrieve<float>("r");
+    float req = parser.retrieve<float>("r");
+
+Arguments that are treated as flags can be retrieved as boolean:
+
+    bool flag = parser.retrieve<float>("optional");
 
 Method Summary
 --------------
