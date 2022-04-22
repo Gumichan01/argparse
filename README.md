@@ -9,7 +9,7 @@ An example says it best:
     int main(int argc, const char** argv) {
 
       // make a new ArgumentParser
-      ArgumentParser parser;
+      argparse::ArgumentParser parser;
 
       // add some arguments to search for
       parser.addArgument("-a")
@@ -38,6 +38,12 @@ If the supplied format is incorrect or we explicitly call `parser.usage()`, a us
 Compiling
 ---------
 Just grab the `argparse.hpp` header and go! The `ArgumentParser` is the only definition in `argparse.hpp`. Dependent classes are nested within `ArgumentParser`.
+
+For compiling `demo.cpp`, just do this:
+
+```
+g++ -std=c++17 demo.cpp -o demo-parser
+```
 
 Format
 ------
@@ -111,4 +117,3 @@ Method Summary
     clear()                   clear all specified arguments
     isRegisteredArgument()    check if an argument has been registered
     isParsedArgument()        check if the following argument has been found
-
