@@ -2,6 +2,7 @@
 #include "argparse.hpp"
 
 using namespace std;
+using namespace argparse;
 
 
 int main(int argc, const char** argv) {
@@ -18,24 +19,32 @@ int main(int argc, const char** argv) {
   // parse the command-line arguments - throws if invalid format
   parser.parse(argc, argv);
 
-  if(parser.gotArgument("five")) {
+  if (parser.hasParsedArgument("five")) {
       vector<float> five = parser.retrieve<vector<float> >("five");
       cout << "five: " << five << endl;
   }
 
-  if(parser.gotArgument("cactus")) {
+  if (parser.hasParsedArgument("cactus")) {
       int cactus = parser.retrieve<int>("cactus");
       cout << "cactus: " << cactus << endl;
   }
 
-  if(parser.gotArgument("variadic")) {
+  if (parser.hasParsedArgument("variadic")) {
       vector<vector<int> > variadic = parser.retrieve<vector<vector<int> > >("variadic");
       cout << "variadic: " << variadic << endl;
   }
 
-  if(parser.gotArgument("final")) {
+  if (parser.hasParsedArgument("final")) {
       string final = parser.retrieve<string>(final);
       cout << "final: " << final << endl;
   }
-}
 
+  const auto& parsedArguments = parser.retrieveParsedArguments();
+  for (const ParsedArgument& arg: parsedArguments) {
+      std::cout << "Short name: \"" << arg.short_name << "\"; "
+                << "Long name: \"" << arg.long_name << "\"; "
+                << "Name: \"" << arg.name << "\"\n";
+  }
+
+  return 0;
+}
