@@ -393,6 +393,12 @@ namespace argparse {
         // --------------------------------------------------------------------------
         // Retrieve
         // --------------------------------------------------------------------------
+        String retrieve(const String& arg_name) const {
+            const auto & dname = delimit(arg_name);
+            if (index_.count(dname) == 0) throw std::out_of_range("Key not found");
+            const size_t N = index_.at(dname);
+            return variables_[N];
+        }
         template <typename T>
         T retrieve(const String& arg_name) const {
             const auto & dname = delimit(arg_name);
