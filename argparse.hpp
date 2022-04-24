@@ -256,7 +256,10 @@ namespace argparse {
         // --------------------------------------------------------------------------
         // addArgument
         // --------------------------------------------------------------------------
-        void appName(const String& name) { app_name_ = name; }
+        ArgumentParser& appName(const String& name) {
+            app_name_ = name;
+            return *this;
+        }
         ArgumentParser& addArgument(const String& name, char nargs = 0, bool optional = true) {
             if (name.size() > 2) {
                 Argument arg("", verify(name), optional, nargs);
